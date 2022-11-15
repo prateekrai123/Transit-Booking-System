@@ -2,6 +2,7 @@ package com.app.transitbookingsystem
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.sliet.transitbookingsystem.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

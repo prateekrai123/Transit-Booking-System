@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "924445544624",
+    "project_id": "transit-booking-system",
+    "storage_bucket": "transit-booking-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:924445544624:android:0eec2027852fff54fa6b75",
+        "android_client_info": {
+          "package_name": "com.sliet.transitbookingsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "924445544624-vuh5t1adkld34gdg23dl9fq9qogamkc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW-gdfjb5t-r0msRSOdipHmW5Rb5FZUm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "924445544624-vuh5t1adkld34gdg23dl9fq9qogamkc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

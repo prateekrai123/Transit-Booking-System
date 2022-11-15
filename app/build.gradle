@@ -1,14 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'com.app.transitbookingsystem'
+    namespace 'com.sliet.transitbookingsystem'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.app.transitbookingsystem"
+        applicationId "com.sliet.transitbookingsystem"
         minSdk 21
         targetSdk 33
         versionCode 1
@@ -38,7 +39,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:+'
     implementation 'com.google.android.material:material:+'
     implementation 'androidx.constraintlayout:constraintlayout:+'
+    implementation platform('com.google.firebase:firebase-bom:31.0.3')
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     testImplementation 'junit:junit:4.13.2'
+    def nav_version = "2.3.5"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     androidTestImplementation 'androidx.test.ext:junit:+'
     androidTestImplementation 'androidx.test.espresso:espresso-core:+'
 }
