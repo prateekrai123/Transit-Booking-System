@@ -1,4 +1,4 @@
-package com.app.transitbookingsystem
+package com.app.transitbookingsystem.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

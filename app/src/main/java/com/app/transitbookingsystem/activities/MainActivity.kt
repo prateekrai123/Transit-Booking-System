@@ -1,4 +1,4 @@
-package com.app.transitbookingsystem
+package com.app.transitbookingsystem.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
