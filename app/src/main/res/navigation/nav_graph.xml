@@ -7,33 +7,24 @@
 
     <fragment
         android:id="@+id/applyFragment"
-        android:name="com.app.transitbookingsystem.ApplyFragment"
+        android:name="com.app.transitbookingsystem.fragments.ApplyFragment"
         android:label="fragment_apply"
-        tools:layout="@layout/fragment_apply" >
-        <action
-            android:id="@+id/action_applyFragment_to_viewSingleApplication"
-            app:destination="@id/viewSingleApplication" />
-    </fragment>
+        tools:layout="@layout/fragment_apply" />
     <fragment
         android:id="@+id/viewSingleApplication"
         android:name="com.app.transitbookingsystem.fragments.ViewSingleApplication"
         android:label="fragment_view_single_application"
         tools:layout="@layout/fragment_view_single_application" />
     <fragment
-        android:id="@+id/activeApplicationsList"
-        android:name="com.app.transitbookingsystem.fragments.ActiveApplicationsList"
-        android:label="fragment_active_applications_list"
-        tools:layout="@layout/fragment_active_applications_list" />
-    <fragment
         android:id="@+id/mainFragment"
         android:name="com.app.transitbookingsystem.fragments.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_activeApplicationsList"
-            app:destination="@id/activeApplicationsList" />
-        <action
             android:id="@+id/action_mainFragment_to_applyFragment"
             app:destination="@id/applyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_viewSingleApplication"
+            app:destination="@id/viewSingleApplication" />
     </fragment>
 </navigation>

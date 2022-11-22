@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.fragment.findNavController
 import com.sliet.transitbookingsystem.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +24,8 @@ class MainFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var newApplicationBtn: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +39,15 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        val view =  inflater.inflate(R.layout.fragment_main, container, false)
+
+        newApplicationBtn = view.findViewById(R.id.newApplicationBtn)
+
+        newApplicationBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_applyFragment)
+        }
+
+        return view
     }
 
     companion object {

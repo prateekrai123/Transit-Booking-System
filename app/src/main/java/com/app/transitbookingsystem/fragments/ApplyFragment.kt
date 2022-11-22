@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.sliet.transitbookingsystem.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,12 +33,6 @@ class ApplyFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
-        applyBtn = view?.findViewById(R.id.applyBtn)!!
-
-        applyBtn.setOnClickListener {
-
-        }
-
     }
 
     override fun onCreateView(
@@ -45,7 +40,14 @@ class ApplyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_apply, container, false)
+        val view = inflater.inflate(R.layout.fragment_apply, container, false)
+        applyBtn = view.findViewById(R.id.applyBtn)
+
+        applyBtn.setOnClickListener {
+            Toast.makeText(context, "Work in progress", Toast.LENGTH_LONG).show()
+        }
+
+        return view
     }
 
     companion object {
