@@ -5,32 +5,41 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.sliet.transitbookingsystem.R
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ApplyFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ApplyFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     lateinit var applyBtn: Button
+    lateinit var etVisName: EditText
+    lateinit var etAdd : EditText
+    lateinit var etPurpose: EditText
+    lateinit var etDateOfArr : EditText
+    lateinit var etDateOfDep: EditText
+    lateinit var etTotDays: EditText
+    lateinit var etStudName: EditText
+    lateinit var etStudRegNo: EditText
+    private lateinit var hostelNoSpinner: Spinner
+    lateinit var etRoomNo: EditText
+    lateinit var etMobNo: EditText
+    lateinit var etPaymentMode: EditText
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
 
     }
@@ -39,34 +48,84 @@ class ApplyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_apply, container, false)
         applyBtn = view.findViewById(R.id.applyBtn)
+        etVisName = view.findViewById(R.id.etVisName)
+        etAdd = view.findViewById(R.id.etVisAdd)
+        etPurpose = view.findViewById(R.id.etPurpose)
+        etDateOfArr = view.findViewById(R.id.etDateOfArrival)
+        etDateOfDep = view.findViewById(R.id.etDateOfDeparture)
+        etTotDays = view.findViewById(R.id.etTotalDays)
+        etStudName = view.findViewById(R.id.etStudName)
+        etStudRegNo = view.findViewById(R.id.StudRegNo)
+        hostelNoSpinner = view.findViewById(R.id.spinner)
+        etRoomNo = view.findViewById(R.id.etRoomNo)
+        etMobNo = view.findViewById(R.id.etMobNo)
+        etPaymentMode = view.findViewById(R.id.etPaymentOption)
+
+        database = Firebase.database.reference
+
+        val arr = arrayOf("BH1", "BH2", "BH3", "BH4", "BH5", "BH6", "BH7", "BH8", "BH9", "BH10", "GH1", "GH2", "GH3")
+        val adapter = ArrayAdapter(requireContext(), androidx.transition.R.layout.support_simple_spinner_dropdown_item, arr)
+        hostelNoSpinner.adapter = adapter
+
+        var hostel : String = "BH1"
+
+        hostelNoSpinner.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                hostel = arr[p2]
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
 
         applyBtn.setOnClickListener {
+            if(
+                etVisName.text.toString().trim() == "" ||
+                        etAdd.text.toString().trim() == "" ||
+                        etPurpose.text.toString().trim() == "" ||
+                        etDateOfArr.text.toString().trim() == "" ||
+                        etDateOfDep.text.toString().trim() == "" ||
+                        etTotDays.text.toString().trim() == "" ||
+                        etStudName.text.toString().trim() == "" ||
+                        etStudRegNo.text.toString().trim() == "" ||
+                        etRoomNo.text.toString().trim() == "" ||
+                        etMobNo.text.toString().trim() == "" ||
+                        etPaymentMode.text.toString().trim() == ""
+            ){
+
+                Toast.makeText(context, "All fields should be completely filled", Toast.LENGTH_LONG).show()
+            }
+            else{
+                val id = DateTimeFormatter
+                    .ofPattern("yyyyMMddHHmmssSSSSSS")
+                    .withZone(ZoneOffset.UTC)
+                    .format(Instant.now())
+
+                val application = com.app.transitbookingsystem.models.Application(
+                    id,
+                    etVisName.text.toString().trim(),
+                    etPurpose.text.toString().trim(),
+                    etDateOfArr.text.toString().trim(),
+                    etDateOfDep.text.toString().trim(),
+                    etTotDays.text.toString().trim(),
+                    etStudName.text.toString().trim(),
+                    etStudRegNo.text.toString().trim(),
+                    hostel,
+                    etRoomNo.text.toString().trim(),
+                    etMobNo.text.toString().trim(),
+                    etPaymentMode.text.toString().trim(),
+                )
+
+                database.child("applications").child(id).setValue(application)
+            }
             Toast.makeText(context, "Work in progress", Toast.LENGTH_LONG).show()
         }
 
         return view
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ApplyFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ApplyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
