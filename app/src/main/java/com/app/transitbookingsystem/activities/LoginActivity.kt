@@ -77,10 +77,10 @@ class LoginActivity : AppCompatActivity() {
         try {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)!!
             val user = User(
-                    account.displayName!!,
-                    0,
-                    account.email!!
-                    )
+                account.displayName!!,
+                0,
+                account.email!!
+            )
 
             val domain= account.email!!.split('@')[1]
             if(domain!="sliet.ac.in"){
