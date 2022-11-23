@@ -119,6 +119,8 @@ class ApplyFragment : Fragment() {
                     etRoomNo.text.toString().trim(),
                     etMobNo.text.toString().trim(),
                     etPaymentMode.text.toString().trim(),
+                    false,
+                    false
                 )
 
                 database.child("applications").child(id).setValue(application)

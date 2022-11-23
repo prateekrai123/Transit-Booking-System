@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.app.transitbookingsystem.models.Application
@@ -14,6 +15,7 @@ class ApplierAdapter(private var applicationList: List<Application>): RecyclerVi
 
     inner class ApplierAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val singleApplicationBtn: Button = view.findViewById(R.id.singleApplicationBtn)
+        val txtDate: TextView = view.findViewById(R.id.txtDate)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApplierAdapterViewHolder {
@@ -25,9 +27,10 @@ class ApplierAdapter(private var applicationList: List<Application>): RecyclerVi
         holder.singleApplicationBtn.setOnClickListener {
             val navController = Navigation.findNavController(it)
             val bundle = Bundle()
-            bundle.putInt("id", applicationList[position].id)
+            bundle.putString("id", applicationList[position].id)
             navController!!.navigate(R.id.action_mainFragment_to_viewSingleApplication, bundle)
         }
+        holder.txtDate.text = applicationList[position].dateOfArrival
     }
 
     override fun getItemCount(): Int {

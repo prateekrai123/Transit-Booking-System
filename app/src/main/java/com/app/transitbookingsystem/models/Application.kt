@@ -12,5 +12,7 @@ data class Application(
     val hostel: String,
     val roomNo: String,
     val mobNo: String,
-    val paymentMode: String
+    val paymentMode: String,
+    val approvedByHostel: Boolean,
+    val approvedByGuestHouse: Boolean
         )
