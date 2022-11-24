@@ -1,5 +1,6 @@
 package com.app.transitbookingsystem.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -35,6 +37,11 @@ class ApplyFragment : Fragment() {
     lateinit var etMobNo: EditText
     lateinit var etPaymentMode: EditText
     private lateinit var database: DatabaseReference
+
+
+    private  val sharedFileName = "users"
+
+    lateinit var sp: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +72,11 @@ class ApplyFragment : Fragment() {
         etPaymentMode = view.findViewById(R.id.etPaymentOption)
 
         database = Firebase.database.reference
+
+        sp = activity?.getSharedPreferences(sharedFileName, AppCompatActivity.MODE_PRIVATE)!!
+
+        val email = sp.getString("email", "")
+        val name = sp.getString("name", "")
 
         val arr = arrayOf("BH1", "BH2", "BH3", "BH4", "BH5", "BH6", "BH7", "BH8", "BH9", "BH10", "GH1", "GH2", "GH3")
         val adapter = ArrayAdapter(requireContext(), androidx.transition.R.layout.support_simple_spinner_dropdown_item, arr)
@@ -108,6 +120,7 @@ class ApplyFragment : Fragment() {
 
                 val application = com.app.transitbookingsystem.models.Application(
                     id,
+                    email.toString().trim(),
                     etVisName.text.toString().trim(),
                     etPurpose.text.toString().trim(),
                     etDateOfArr.text.toString().trim(),
@@ -122,12 +135,14 @@ class ApplyFragment : Fragment() {
                     false,
                     false
                 )
-
-                database.child("applications").child(id).setValue(application)
+                database.child("applications").child(id).setValue(application).addOnSuccessListener {
+                    Toast.makeText(context, "Applied", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener{
+                    it.printStackTrace()
+                }
             }
             Toast.makeText(context, "Work in progress", Toast.LENGTH_LONG).show()
         }
-
         return view
     }
 }

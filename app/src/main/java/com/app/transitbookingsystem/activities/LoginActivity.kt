@@ -1,6 +1,7 @@
 package com.app.transitbookingsystem.activities
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.SharedPreferences
@@ -12,6 +13,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.edit
 import com.app.transitbookingsystem.models.User
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
@@ -35,6 +37,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var progressLayout: ConstraintLayout
     private  val sharedFileName = "users"
 
+    lateinit var sp: SharedPreferences
+
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var gso: GoogleSignInOptions
     private val RC_SIGN_IN: Int = 1
@@ -42,6 +46,14 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        sp = this.getSharedPreferences(sharedFileName, Context.MODE_PRIVATE)
+
+        val isLoggedIn = sp.getBoolean("isLoggedIn", false)
+
+        if(isLoggedIn){
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.client_id))
@@ -92,6 +104,7 @@ class LoginActivity : AppCompatActivity() {
                 user.role?.let { editor.putInt("role", it) }
                 editor.putString("name", user.name)
                 editor.putString("email", user.email)
+                editor.putBoolean("isLoggedIn", true)
                 editor.apply()
                 editor.commit()
                 startActivity(Intent(this, MainActivity::class.java))
@@ -99,6 +112,7 @@ class LoginActivity : AppCompatActivity() {
             progressLayout.visibility = View.INVISIBLE
         } catch (e: ApiException) {
             progressLayout.visibility = View.INVISIBLE
+            Toast.makeText(this, "Some error occurred", Toast.LENGTH_LONG).show()
             e.printStackTrace()
         }
     }

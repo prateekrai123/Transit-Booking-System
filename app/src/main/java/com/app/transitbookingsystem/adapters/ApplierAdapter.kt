@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.app.transitbookingsystem.models.Application
@@ -14,7 +15,7 @@ import com.sliet.transitbookingsystem.R
 class ApplierAdapter(private var applicationList: List<Application>): RecyclerView.Adapter<ApplierAdapter.ApplierAdapterViewHolder>() {
 
     inner class ApplierAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val singleApplicationBtn: Button = view.findViewById(R.id.singleApplicationBtn)
+        val singleApplicationBtn: ConstraintLayout = view.findViewById(R.id.singleApplicationBtn)
         val txtDate: TextView = view.findViewById(R.id.txtDate)
     }
 
@@ -28,7 +29,7 @@ class ApplierAdapter(private var applicationList: List<Application>): RecyclerVi
             val navController = Navigation.findNavController(it)
             val bundle = Bundle()
             bundle.putString("id", applicationList[position].id)
-            navController!!.navigate(R.id.action_mainFragment_to_viewSingleApplication, bundle)
+            navController.navigate(R.id.action_mainFragment_to_viewSingleApplication, bundle)
         }
         holder.txtDate.text = applicationList[position].dateOfArrival
     }
