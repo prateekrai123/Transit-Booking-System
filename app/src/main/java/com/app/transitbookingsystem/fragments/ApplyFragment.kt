@@ -113,32 +113,37 @@ class ApplyFragment : Fragment() {
                 Toast.makeText(context, "All fields should be completely filled", Toast.LENGTH_LONG).show()
             }
             else{
-                val id = DateTimeFormatter
-                    .ofPattern("yyyyMMddHHmmssSSSSSS")
-                    .withZone(ZoneOffset.UTC)
-                    .format(Instant.now())
+                try {
+                    val id = DateTimeFormatter
+                        .ofPattern("yyyyMMddHHmmssSSSSSS")
+                        .withZone(ZoneOffset.UTC)
+                        .format(Instant.now())
 
-                val application = com.app.transitbookingsystem.models.Application(
-                    id,
-                    email.toString().trim(),
-                    etVisName.text.toString().trim(),
-                    etPurpose.text.toString().trim(),
-                    etDateOfArr.text.toString().trim(),
-                    etDateOfDep.text.toString().trim(),
-                    etTotDays.text.toString().trim(),
-                    etStudName.text.toString().trim(),
-                    etStudRegNo.text.toString().trim(),
-                    hostel,
-                    etRoomNo.text.toString().trim(),
-                    etMobNo.text.toString().trim(),
-                    etPaymentMode.text.toString().trim(),
-                    false,
-                    false
-                )
-                database.child("applications").child(id).setValue(application).addOnSuccessListener {
-                    Toast.makeText(context, "Applied", Toast.LENGTH_LONG).show()
-                }.addOnFailureListener{
-                    it.printStackTrace()
+                    val application = com.app.transitbookingsystem.models.Application(
+                        id,
+                        email.toString().trim(),
+                        etVisName.text.toString().trim(),
+                        etPurpose.text.toString().trim(),
+                        etDateOfArr.text.toString().trim(),
+                        etDateOfDep.text.toString().trim(),
+                        etTotDays.text.toString().trim(),
+                        etStudName.text.toString().trim(),
+                        etStudRegNo.text.toString().trim(),
+                        hostel,
+                        etRoomNo.text.toString().trim(),
+                        etMobNo.text.toString().trim(),
+                        etPaymentMode.text.toString().trim(),
+                        false,
+                        false
+                    )
+                    database.child("applications").child(id).setValue(application).addOnSuccessListener {
+                        Toast.makeText(context, "Applied", Toast.LENGTH_LONG).show()
+                    }.addOnFailureListener{
+                        it.printStackTrace()
+                    }
+                }
+                catch (e: Exception){
+                    e.printStackTrace()
                 }
             }
             Toast.makeText(context, "Work in progress", Toast.LENGTH_LONG).show()

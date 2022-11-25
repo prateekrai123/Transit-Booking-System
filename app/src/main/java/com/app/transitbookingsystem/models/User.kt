@@ -1,7 +1,8 @@
 package com.app.transitbookingsystem.models
 
 data class User (
-    val name: String,
-    val role: Int?,
-    val email: String
+    val name: String?,
+    var role: String?,
+    val email: String?,
+    var hostel: String?,
         )

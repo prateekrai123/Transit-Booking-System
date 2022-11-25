@@ -26,16 +26,21 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sliet.transitbookingsystem.R
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var loginButton: Button
     lateinit var progressLayout: ConstraintLayout
     private  val sharedFileName = "users"
+    lateinit var database: DatabaseReference
 
     lateinit var sp: SharedPreferences
 
@@ -62,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-
+        database = Firebase.database.reference
 
         loginButton = findViewById(R.id.loginBtn)
         progressLayout = findViewById(R.id.progressLayout)
@@ -90,8 +95,9 @@ class LoginActivity : AppCompatActivity() {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)!!
             val user = User(
                 account.displayName!!,
-                0,
-                account.email!!
+                "student",
+                account.email!!,
+                "hostel"
             )
 
             val domain= account.email!!.split('@')[1]
@@ -99,21 +105,72 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Sign in with sliet email", Toast.LENGTH_LONG).show()
             }
             else{
-                val sp = this.getSharedPreferences(sharedFileName, MODE_PRIVATE)
-                val editor = sp.edit()
-                user.role?.let { editor.putInt("role", it) }
-                editor.putString("name", user.name)
-                editor.putString("email", user.email)
-                editor.putBoolean("isLoggedIn", true)
-                editor.apply()
-                editor.commit()
-                startActivity(Intent(this, MainActivity::class.java))
+                var list: HashMap<String, HashMap<String, String>>
+                database.child("users").get().addOnSuccessListener {
+                    if(it.value == null){
+                        addUser(user, this)
+                        return@addOnSuccessListener
+                    }
+                    list= it.value as HashMap<String, HashMap<String, String>>
+                    if(list.isEmpty()){
+                        addUser(user, this)
+                        return@addOnSuccessListener
+                    }
+                    else{
+                        for(s in list.keys){
+                            val temp = list[s]
+                            if(temp?.get("email") == account.email){
+                                user.role = temp?.get("role")
+                                success(user, this)
+                                return@addOnSuccessListener
+                            }
+                        }
+                        addUser(user, this)
+                    }
+                }.addOnFailureListener {
+                    it.printStackTrace()
+                    progressLayout.visibility = View.INVISIBLE
+                    Toast.makeText(this, "Some error occurred", Toast.LENGTH_LONG).show()
+                }
             }
             progressLayout.visibility = View.INVISIBLE
         } catch (e: ApiException) {
             progressLayout.visibility = View.INVISIBLE
             Toast.makeText(this, "Some error occurred", Toast.LENGTH_LONG).show()
             e.printStackTrace()
+        }
+    }
+
+    private fun addUser(user: User, context: Context){
+        val id = user.email?.split('@')?.get(0)!!
+        database.child("users").child(id).setValue(user).addOnFailureListener {
+            Toast.makeText(this, "Some error occurred", Toast.LENGTH_LONG).show()
+            return@addOnFailureListener
+        }.addOnSuccessListener {
+            success(user, context)
+        }
+    }
+
+    private fun success(user: User, context: Context){
+        val sp = this.getSharedPreferences(sharedFileName, MODE_PRIVATE)
+        val editor = sp.edit()
+        user.role?.let { editor.putString("role", it) }
+        editor.putString("name", user.name)
+        editor.putString("email", user.email)
+        editor.putBoolean("isLoggedIn", true)
+        editor.putString("hostel", user.hostel)
+        editor.apply()
+        editor.commit()
+        startMyActivity(user, context)
+        finish()
+    }
+
+    private fun startMyActivity(user: User, context: Context){
+        if(user.role == "0"){
+            startActivity(Intent(context, MainActivity::class.java))
+        }
+        else{
+            startActivity(Intent(context, AdminActivity::class.java))
         }
     }
 }

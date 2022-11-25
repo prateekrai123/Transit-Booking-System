@@ -9,5 +9,14 @@
         android:id="@+id/activeApplicationsList"
         android:name="com.app.transitbookingsystem.fragments.ActiveApplicationsList"
         android:label="fragment_active_applications_list"
-        tools:layout="@layout/fragment_active_applications_list" />
+        tools:layout="@layout/fragment_active_applications_list" >
+        <action
+            android:id="@+id/action_activeApplicationsList_to_confirmSingleApplication"
+            app:destination="@id/confirmSingleApplication" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmSingleApplication"
+        android:name="com.app.transitbookingsystem.fragments.ConfirmSingleApplication"
+        android:label="fragment_confirm_single_application"
+        tools:layout="@layout/fragment_confirm_single_application" />
 </navigation>

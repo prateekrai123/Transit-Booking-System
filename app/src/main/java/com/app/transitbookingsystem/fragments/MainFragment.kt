@@ -1,5 +1,7 @@
 package com.app.transitbookingsystem.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,6 +28,9 @@ class MainFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     private lateinit var database: DatabaseReference
 
+    lateinit var sp: SharedPreferences
+    private  val sharedFileName = "users"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,18 +50,28 @@ class MainFragment : Fragment() {
 
         database = Firebase.database.reference
 
+        sp = activity?.getSharedPreferences(sharedFileName, Context.MODE_PRIVATE)!!
+
+        val email = sp.getString("email", "")
+
         println(1)
 
         var applications: HashMap<String, HashMap<String, Any>>
 
         database.child("applications").get().addOnSuccessListener {
+            if(it.value==null){
+                return@addOnSuccessListener
+            }
             applications = it.value as HashMap<String, HashMap<String, Any>>
             var list = arrayListOf<Application>()
             val x = applications.keys
             for(i in x){
                 val temp = applications[i]
+                if(temp!!.get("email")!=email){
+                    continue
+                }
                 val singleApplication = Application(
-                    temp!!.get("id").toString(),
+                    temp.get("id").toString(),
                     temp.get("email").toString(),
                     temp.get("visitorName").toString(),
                     temp.get("purpose").toString(),
