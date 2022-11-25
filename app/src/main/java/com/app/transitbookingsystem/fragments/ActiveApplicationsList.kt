@@ -1,10 +1,23 @@
 package com.app.transitbookingsystem.fragments
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import com.app.transitbookingsystem.activities.LoginActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.sliet.transitbookingsystem.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +35,13 @@ class ActiveApplicationsList : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var btnLogOut: Button
+    private lateinit var database: DatabaseReference
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    lateinit var sp: SharedPreferences
+    private  val sharedFileName = "users"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +55,32 @@ class ActiveApplicationsList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_active_applications_list, container, false)
+        val view =  inflater.inflate(R.layout.fragment_active_applications_list, container, false)
+
+        btnLogOut = view.findViewById(R.id.btnLogOut)
+
+        database = Firebase.database.reference
+
+        sp = activity?.getSharedPreferences(sharedFileName, Context.MODE_PRIVATE)!!
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.client_id))
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        btnLogOut.setOnClickListener {
+            mGoogleSignInClient.signOut().addOnSuccessListener {
+                sp.edit().clear().commit()
+                startActivity(Intent(context, LoginActivity::class.java))
+                ActivityCompat.finishAffinity(requireActivity())
+            }.addOnFailureListener {
+                Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        return view
     }
 
     companion object {

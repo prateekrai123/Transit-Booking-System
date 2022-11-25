@@ -1,6 +1,7 @@
 package com.app.transitbookingsystem.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,11 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.app.transitbookingsystem.activities.LoginActivity
 import com.app.transitbookingsystem.adapters.ApplierAdapter
 import com.app.transitbookingsystem.models.Application
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -26,7 +33,9 @@ class MainFragment : Fragment() {
 
     lateinit var newApplicationBtn: Button
     lateinit var recyclerView: RecyclerView
+    lateinit var btnLogOut: Button
     private lateinit var database: DatabaseReference
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
 
     lateinit var sp: SharedPreferences
     private  val sharedFileName = "users"
@@ -47,10 +56,28 @@ class MainFragment : Fragment() {
 
         newApplicationBtn = view.findViewById(R.id.newApplicationBtn)
         recyclerView = view.findViewById(R.id.recyclerView2)
+        btnLogOut = view.findViewById(R.id.btnLogOut)
 
         database = Firebase.database.reference
 
         sp = activity?.getSharedPreferences(sharedFileName, Context.MODE_PRIVATE)!!
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.client_id))
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        btnLogOut.setOnClickListener {
+            mGoogleSignInClient.signOut().addOnSuccessListener {
+                sp.edit().clear().commit()
+                startActivity(Intent(context, LoginActivity::class.java))
+                ActivityCompat.finishAffinity(requireActivity())
+            }.addOnFailureListener {
+                Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+            }
+        }
 
         val email = sp.getString("email", "")
 

@@ -95,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
             val account: GoogleSignInAccount = completedTask.getResult(ApiException::class.java)!!
             val user = User(
                 account.displayName!!,
-                "student",
+                "0",
                 account.email!!,
                 "hostel"
             )
@@ -168,9 +168,11 @@ class LoginActivity : AppCompatActivity() {
     private fun startMyActivity(user: User, context: Context){
         if(user.role == "0"){
             startActivity(Intent(context, MainActivity::class.java))
+            finish()
         }
         else{
             startActivity(Intent(context, AdminActivity::class.java))
+            finish()
         }
     }
 }
