@@ -1,13 +1,159 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.transitbookingsystem.fragments.ViewSingleApplication">
+    tools:context="com.app.transitbookingsystem.fragments.ApplyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="793dp"
+        android:contentDescription="@string/app_name">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Student's Details"
+                android:textColor="#000"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/etStudentName"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Name of Student" />
+
+            <TextView
+                android:id="@+id/etStudentReg"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Reg No." />
+
+            <TextView
+                android:id="@+id/etDays"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="No. of Days" />
+
+            <TextView
+                android:id="@+id/etArrival"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Date of Arrival"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/etDeparture"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Date of Departure"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/etHostel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Hostel No."
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/etRoom"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Room No."
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/etMobile"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Mobile No."
+                android:inputType="number" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="316dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="190dp"
+                card_view:cardBackgroundColor="#97a5f7"
+                card_view:cardCornerRadius="7dp"
+                card_view:cardElevation="16dp">
+
+                <TextView
+                    android:id="@+id/verify_warden"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_margin="20dp"
+                    android:layout_marginTop="4dp"
+                    android:text="Verify from Hostel"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="26sp" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card2_view"
+                android:layout_width="316dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="190dp"
+                android:layout_marginTop="29dp"
+                android:layout_marginRight="190dp"
+                android:layout_marginBottom="0dp"
+                card_view:cardBackgroundColor="#97a5f7"
+                card_view:cardCornerRadius="7dp"
+                card_view:cardElevation="16dp">
+
+                <TextView
+                    android:id="@+id/verifyTransit"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_margin="20dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:background=""
+                    android:text="Verify from Transit"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+
+                    android:textSize="26sp" />
+
+
+            </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/applyBtn"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:text="Delete Application"
+                android:backgroundTint="#e63757"
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </FrameLayout>

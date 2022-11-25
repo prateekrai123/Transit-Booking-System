@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "884854822139",
-    "project_id": "transitbookingsystem",
-    "storage_bucket": "transitbookingsystem.appspot.com"
+    "project_number": "924445544624",
+    "project_id": "transit-booking-system",
+    "storage_bucket": "transit-booking-system.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:884854822139:android:1f6336c6cd6beb03e04c5e",
+        "mobilesdk_app_id": "1:924445544624:android:0eec2027852fff54fa6b75",
         "android_client_info": {
           "package_name": "com.sliet.transitbookingsystem"
         }
       },
       "oauth_client": [
         {
-          "client_id": "884854822139-rjnoggd6goec6nl2p81adnfg38i2g38t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.sliet.transitbookingsystem",
-            "certificate_hash": "62799ebc235c6254cda6a0a2b6f385dbde62f81d"
-          }
-        },
-        {
-          "client_id": "884854822139-cd6ee402862maklokh0m43ff6t6hsa5m.apps.googleusercontent.com",
+          "client_id": "924445544624-vuh5t1adkld34gdg23dl9fq9qogamkc4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA02YT3H4MgsBc_JmmUma_UtwnmuQ9kU0s"
+          "current_key": "AIzaSyDW-gdfjb5t-r0msRSOdipHmW5Rb5FZUm0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "884854822139-cd6ee402862maklokh0m43ff6t6hsa5m.apps.googleusercontent.com",
+              "client_id": "924445544624-vuh5t1adkld34gdg23dl9fq9qogamkc4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

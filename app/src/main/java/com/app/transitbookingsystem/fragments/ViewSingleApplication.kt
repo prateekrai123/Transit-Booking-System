@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.sliet.transitbookingsystem.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +23,14 @@ class ViewSingleApplication : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var txtStudentName:TextView
+    lateinit var txtDays:TextView
+    lateinit var txtArrival:TextView
+    lateinit var txtDeparture:TextView
+    lateinit var txtHostel:TextView
+    lateinit var txtRoom:TextView
+    lateinit var txtMobile:TextView
+    lateinit var txtRegno:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +44,17 @@ class ViewSingleApplication : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_single_application, container, false)
+        val view= inflater.inflate(R.layout.fragment_view_single_application, container, false)
+        txtStudentName = view.findViewById(R.id.etStudentName)
+        txtDays = view.findViewById(R.id.etDays)
+        txtArrival=view.findViewById(R.id.etArrival)
+        txtDeparture=view.findViewById(R.id.etDeparture)
+        txtHostel=view.findViewById(R.id.etHostel)
+        txtRoom=view.findViewById(R.id.etRoom)
+        txtMobile=view.findViewById(R.id.etMobile)
+        txtRegno=view.findViewById(R.id.etStudentReg)
+
+        return view
     }
 
     companion object {
