@@ -2,12 +2,137 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.transitbookingsystem.fragments.ConfirmSingleApplication">
+    tools:context="com.app.transitbookingsystem.fragments.ApplyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:contentDescription="@string/app_name">
+
+        <LinearLayout
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Student's Details"
+                android:textSize="20sp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000"/>
+            <TextView
+                android:id="@+id/etStudName1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Name of Student" />
+
+            <TextView
+                android:id="@+id/StudRegNo1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Reg. No." />
+            <TextView
+                android:id="@+id/etVisName1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Name of Visitor" />
+
+            <TextView
+                android:id="@+id/etVisAdd1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Address" />
+
+            <TextView
+                android:id="@+id/etPurpose1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:hint="Purpose" />
+
+            <TextView
+                android:id="@+id/etDateOfArrival1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="date"
+                android:hint="Date of Arrival" />
+
+            <TextView
+                android:id="@+id/etDateOfDeparture1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="date"
+                android:hint="Date of Departure" />
+
+            <TextView
+                android:id="@+id/etTotalDays1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="number"
+                android:hint="Total Number of days" />
+            <TextView
+                android:id="@+id/etHostel1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="number"
+                android:hint="Hostel No." />
+
+
+            <TextView
+                android:id="@+id/etRoomNo1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="number"
+                android:hint="Room No." />
+
+            <TextView
+                android:id="@+id/etMobNo1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="number"
+                android:hint="Mobile No." />
+
+            <TextView
+                android:id="@+id/etPaymentOption1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="number"
+                android:hint="Payment will be made by" />
+
+            <Button
+                android:id="@+id/acceptBtn"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#3dc46a"
+                android:text="Accept"/>
+            <Button
+                android:id="@+id/Btnreject"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:textSize="20sp"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="#e63757"
+                android:text="Reject"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

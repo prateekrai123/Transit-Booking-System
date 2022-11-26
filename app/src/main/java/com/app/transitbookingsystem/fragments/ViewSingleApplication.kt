@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.sliet.transitbookingsystem.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,6 +34,7 @@ class ViewSingleApplication : Fragment() {
     lateinit var txtRoom:TextView
     lateinit var txtMobile:TextView
     lateinit var txtRegno:TextView
+    lateinit var database : DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,6 +49,13 @@ class ViewSingleApplication : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_view_single_application, container, false)
+
+
+        database = Firebase.database.reference
+
+        val id = activity?.intent?.getStringExtra("id")!!
+        val application = database.child("application").child(id) as HashMap<String, HashMap<String, String>>
+
         txtStudentName = view.findViewById(R.id.etStudentName)
         txtDays = view.findViewById(R.id.etDays)
         txtArrival=view.findViewById(R.id.etArrival)
@@ -53,6 +64,16 @@ class ViewSingleApplication : Fragment() {
         txtRoom=view.findViewById(R.id.etRoom)
         txtMobile=view.findViewById(R.id.etMobile)
         txtRegno=view.findViewById(R.id.etStudentReg)
+
+
+        txtMobile.text=application["mobNo"].toString()
+        txtRoom.text=application["roomNo"].toString()
+        txtHostel.text=application["hostel"].toString()
+        txtDays.text=application["TotalNumberOfDays"].toString()
+        txtDeparture.text=application["dateOfDeparture"].toString()
+        txtArrival.text=application["dateOfArrival"].toString()
+        txtRegno.text=application["regNo"].toString()
+        txtStudentName.text=application["studentName"].toString()
 
         return view
     }
