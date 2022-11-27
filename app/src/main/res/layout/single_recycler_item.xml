@@ -9,8 +9,8 @@
         android:layout_height="match_parent"
         app:cardElevation="10dp"
         app:cardCornerRadius="20dp"
-        android:layout_margin="15dp"
-        app:strokeColor="#f33"
+        android:layout_margin="5dp"
+        app:strokeColor="#673AB7"
         app:strokeWidth="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +21,18 @@
             android:id="@+id/singleApplicationBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtsNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="S.No."
+                android:textSize="18sp"
+                android:textColor="#000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtDate"
