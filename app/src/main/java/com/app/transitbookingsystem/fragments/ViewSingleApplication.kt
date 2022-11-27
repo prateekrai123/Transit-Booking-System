@@ -1,7 +1,9 @@
 package com.app.transitbookingsystem.fragments
 
+import android.content.ContentValues.TAG
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,10 +31,13 @@ class ViewSingleApplication : Fragment() {
     lateinit var approvedByGuestHouseView: MaterialCardView
     lateinit var btnDelete: Button
     lateinit var database : DatabaseReference
+
+    private var id: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            id = it.getString("id")
         }
     }
 
@@ -57,10 +62,10 @@ class ViewSingleApplication : Fragment() {
 
         btnDelete = view.findViewById(R.id.btnDelete)
 
-        val id = activity?.intent?.getStringExtra("id")!!
-        var application : HashMap<String, HashMap<String, String>>? = null
-        database.child("application").child(id).get().addOnSuccessListener {
-            application = it.value as HashMap<String, HashMap<String, String>>?
+        var application : HashMap<String, Any>? = null
+        database.child("applications").child(id!!).get().addOnSuccessListener {
+            println(it.value)
+            application = it.value as HashMap<String, Any>?
             approvedByHostelView = view.findViewById(R.id.card_view)
             approvedByGuestHouseView = view.findViewById(R.id.card2_view)
 
@@ -73,8 +78,8 @@ class ViewSingleApplication : Fragment() {
             txtRegno.text=application?.get("regNo").toString()
             txtStudentName.text=application?.get("studentName").toString()
 
-            val approvedByHostel : Boolean = application?.get("approvedByHostel").toString().toBoolean()
-            val approvedByGuestHouse: Boolean = application?.get("approvedByGuestHouse").toString().toBoolean()
+            val approvedByHostel : Boolean = application?.get("approvedByHostel") as Boolean
+            val approvedByGuestHouse: Boolean = application?.get("approvedByGuestHouse") as Boolean
             val green = Color.GREEN
             val red = Color.RED
 
@@ -98,7 +103,7 @@ class ViewSingleApplication : Fragment() {
 
         btnDelete.setOnClickListener {
             btnDelete.isActivated = false
-            database.child("applications").child(id).setValue(null).addOnSuccessListener {
+            database.child("applications").child(id!!).setValue(null).addOnSuccessListener {
                 Toast.makeText(context, "Successfully deleted", Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_viewSingleApplication_to_mainFragment)
             }.addOnFailureListener {

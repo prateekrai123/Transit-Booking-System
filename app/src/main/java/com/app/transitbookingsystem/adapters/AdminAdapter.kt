@@ -32,7 +32,7 @@ class AdminAdapter(private val list: List<Application>,private val context: Cont
         holder.singleConfirmBtn.setOnClickListener {
             val bundle = Bundle()
             bundle.putString("id", item.id)
-            Navigation.findNavController(it).navigate(R.id.action_activeApplicationsList_to_confirmSingleApplication)
+            Navigation.findNavController(it).navigate(R.id.action_activeApplicationsList_to_confirmSingleApplication, bundle)
         }
     }
 
