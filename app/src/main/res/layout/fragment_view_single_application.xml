@@ -99,15 +99,15 @@
                 card_view:cardElevation="16dp">
 
                 <TextView
-                    android:id="@+id/verify_warden"
+                    android:id="@+id/txtHostelVerified"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_margin="20dp"
                     android:layout_marginTop="4dp"
-                    android:text="Verify from Hostel"
+                    android:text="Verified/Not Verified by Hostel"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="26sp" />
+                    android:textSize="20sp" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -125,16 +125,16 @@
                 card_view:cardElevation="16dp">
 
                 <TextView
-                    android:id="@+id/verifyTransit"
+                    android:id="@+id/txtGuestHouseVerified"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="40dp"
                     android:layout_margin="20dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    android:text="Verify from Transit"
+                    android:text="Verified/Not Verified by Guest House"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:textSize="26sp" />
+                    android:textSize="20sp" />
             </com.google.android.material.card.MaterialCardView>
 
             <Button

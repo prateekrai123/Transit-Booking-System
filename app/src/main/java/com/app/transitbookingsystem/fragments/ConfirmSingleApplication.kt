@@ -60,8 +60,8 @@ class ConfirmSingleApplication : Fragment() {
         role = sp.getString("role", "0")
 
         database = Firebase.database.reference
-        val id = activity?.intent?.getStringExtra("id")!!
-        var application :HashMap<String, HashMap<String, String>>? = null
+
+        var application :HashMap<String, Any>? = null
 
         PaymentOption1= view.findViewById(R.id.etPaymentOption1)
         MobNo1= view.findViewById(R.id.etMobNo1)
@@ -77,12 +77,12 @@ class ConfirmSingleApplication : Fragment() {
         btnReject=view.findViewById(R.id.btnReject)
         btnAccept=view.findViewById(R.id.btnAccept)
 
-        database.child("applications").child(id).get().addOnSuccessListener {
+        database.child("applications").child(id!!).get().addOnSuccessListener {
             if(it.value == null){
                 Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
                 return@addOnSuccessListener
             }
-            application = it.value as HashMap<String, HashMap<String, String>>?
+            application = it.value as HashMap<String, Any>?
             PaymentOption1.text= application?.get("paymentMode").toString()
             MobNo1.text=application?.get("mobNo").toString()
             RoomNo1.text=application?.get("roomNo").toString()
@@ -102,7 +102,7 @@ class ConfirmSingleApplication : Fragment() {
         btnAccept.setOnClickListener {
             btnAccept.isActivated = false
             if(role == "1"){
-                database.child("applications").child(id).child("approvedByHostel").setValue(true)
+                database.child("applications").child(id!!).child("approvedByHostel").setValue(true)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)
@@ -112,7 +112,7 @@ class ConfirmSingleApplication : Fragment() {
                     }
             }
             else if(role == "2"){
-                database.child("applications").child(id).child("approvedByGuestHouse").setValue(true)
+                database.child("applications").child(id!!).child("approvedByGuestHouse").setValue(true)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)
@@ -129,7 +129,7 @@ class ConfirmSingleApplication : Fragment() {
         btnReject.setOnClickListener {
             btnAccept.isActivated = false
             if(role == "1"){
-                database.child("applications").child(id).setValue(null)
+                database.child("applications").child(id!!).setValue(null)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)
@@ -139,7 +139,7 @@ class ConfirmSingleApplication : Fragment() {
                     }
             }
             else if(role == "2"){
-                database.child("applications").child(id).setValue(null)
+                database.child("applications").child(id!!).setValue(null)
                     .addOnSuccessListener {
                         Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
                         findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)

@@ -55,9 +55,17 @@ class LoginActivity : AppCompatActivity() {
         sp = this.getSharedPreferences(sharedFileName, Context.MODE_PRIVATE)
 
         val isLoggedIn = sp.getBoolean("isLoggedIn", false)
+        val role = sp.getString("role", "0")
 
         if(isLoggedIn){
-            startActivity(Intent(this, MainActivity::class.java))
+            if(role == "0"){
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+            else {
+                startActivity(Intent(this, AdminActivity::class.java))
+                finish()
+            }
         }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -103,6 +111,7 @@ class LoginActivity : AppCompatActivity() {
             val domain= account.email!!.split('@')[1]
             if(domain!="sliet.ac.in"){
                 Toast.makeText(this, "Sign in with sliet email", Toast.LENGTH_LONG).show()
+                mGoogleSignInClient.signOut()
             }
             else{
                 var list: HashMap<String, HashMap<String, String>>
@@ -121,6 +130,7 @@ class LoginActivity : AppCompatActivity() {
                             val temp = list[s]
                             if(temp?.get("email") == account.email){
                                 user.role = temp?.get("role")
+                                user.hostel = temp?.get("hostel")
                                 success(user, this)
                                 return@addOnSuccessListener
                             }

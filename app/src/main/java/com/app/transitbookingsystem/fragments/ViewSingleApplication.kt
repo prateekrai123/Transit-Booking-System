@@ -30,6 +30,8 @@ class ViewSingleApplication : Fragment() {
     lateinit var approvedByHostelView: MaterialCardView
     lateinit var approvedByGuestHouseView: MaterialCardView
     lateinit var btnDelete: Button
+    lateinit var txtHostelVerified : TextView
+    lateinit var txtGuestHouseVerified: TextView
     lateinit var database : DatabaseReference
 
     private var id: String? = null
@@ -68,15 +70,17 @@ class ViewSingleApplication : Fragment() {
             application = it.value as HashMap<String, Any>?
             approvedByHostelView = view.findViewById(R.id.card_view)
             approvedByGuestHouseView = view.findViewById(R.id.card2_view)
+            txtHostelVerified = view.findViewById(R.id.txtHostelVerified)
+            txtGuestHouseVerified = view.findViewById(R.id.txtGuestHouseVerified)
 
-            txtMobile.text=application?.get("mobNo").toString()
-            txtRoom.text=application?.get("roomNo").toString()
-            txtHostel.text=application?.get("hostel").toString()
-            txtDays.text=application?.get("TotalNumberOfDays").toString()
-            txtDeparture.text=application?.get("dateOfDeparture").toString()
-            txtArrival.text=application?.get("dateOfArrival").toString()
-            txtRegno.text=application?.get("regNo").toString()
-            txtStudentName.text=application?.get("studentName").toString()
+            txtMobile.text= "Mobile :- ${application?.get("mobNo").toString()}"
+            txtRoom.text="Room No. :- ${application?.get("roomNo").toString()}"
+            txtHostel.text="Hostel :- ${application?.get("hostel").toString()}"
+            txtDays.text="Total Number of Days :- ${application?.get("TotalNumberOfDays").toString()}"
+            txtDeparture.text= "Departure Date :- ${ application?.get("dateOfDeparture").toString() }"
+            txtArrival.text= "Arrival Date :-  ${ application?.get("dateOfArrival").toString() }"
+            txtRegno.text="Reg. No. :- ${application?.get(" regNo ").toString()}"
+            txtStudentName.text="Student Name :- ${application?.get(" studentName ").toString()}"
 
             val approvedByHostel : Boolean = application?.get("approvedByHostel") as Boolean
             val approvedByGuestHouse: Boolean = application?.get("approvedByGuestHouse") as Boolean
@@ -85,16 +89,21 @@ class ViewSingleApplication : Fragment() {
 
             if(approvedByGuestHouse){
                 approvedByGuestHouseView.setBackgroundColor(green)
+                txtGuestHouseVerified.text = "Verified by guest house"
+
             }
             else{
                 approvedByGuestHouseView.setBackgroundColor(red)
+                txtHostelVerified.text = "Guest house verification pending"
             }
 
             if(approvedByHostel){
                 approvedByHostelView.setBackgroundColor(green)
+                txtHostelVerified.text = "Verified by hostel"
             }
             else{
                 approvedByHostelView.setBackgroundColor(red)
+                txtHostelVerified.text = "Hostel Verification Pending"
             }
         }.addOnFailureListener {
             it.printStackTrace()

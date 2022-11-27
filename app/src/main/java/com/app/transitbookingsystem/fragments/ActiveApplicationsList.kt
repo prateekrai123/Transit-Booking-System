@@ -57,7 +57,7 @@ class ActiveApplicationsList : Fragment() {
 
         database = Firebase.database.reference
 
-        var applications: HashMap<String, HashMap<String, String>>? = null
+        var applications: HashMap<String, HashMap<String, Any>>? = null
 
         sp = activity?.getSharedPreferences(sharedFileName, Context.MODE_PRIVATE)!!
 
@@ -69,7 +69,7 @@ class ActiveApplicationsList : Fragment() {
                 Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
                 return@addOnSuccessListener
             }
-            applications = it.value as HashMap<String, HashMap<String, String>>?
+            applications = it.value as HashMap<String, HashMap<String, Any>>?
             val applicationList = applicationList(applications)
             recyclerView.adapter = AdminAdapter(applicationList!!, requireContext())
             recyclerView.layoutManager = LinearLayoutManager(context)
@@ -98,11 +98,12 @@ class ActiveApplicationsList : Fragment() {
         return view
     }
 
-    private fun applicationList(applications: HashMap<String, HashMap<String, String>>?): List<Application>? {
+    private fun applicationList(applications: HashMap<String, HashMap<String, Any>>?): List<Application>? {
+        println(this.hostel)
         val applicationsList = arrayListOf<Application>()
         val item = applications?.keys
         for(i in item!!){
-            val temp: java.util.HashMap<String, String>? = applications[i]
+            val temp: java.util.HashMap<String, Any>? = applications[i]
             val hostel = temp?.get("hostel")
             val approvedByHostel: Boolean = temp?.get("approvedByHostel") as Boolean
             if(role == "2"){

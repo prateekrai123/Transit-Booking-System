@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.app.transitbookingsystem.models.Application
@@ -17,7 +18,7 @@ class AdminAdapter(private val list: List<Application>,private val context: Cont
     open inner class AdminAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val txtSNo: TextView = itemView.findViewById(R.id.txtsNo)
         val txtDate: TextView = itemView.findViewById(R.id.txtDate)
-        val singleConfirmBtn: MaterialCardView = itemView.findViewById(R.id.singleApplicationBtn)
+        val singleConfirmBtn: ConstraintLayout = itemView.findViewById(R.id.singleApplicationBtn)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminAdapterViewHolder {
