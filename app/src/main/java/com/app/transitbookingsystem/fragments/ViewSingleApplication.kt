@@ -76,11 +76,11 @@ class ViewSingleApplication : Fragment() {
             txtMobile.text= "Mobile :- ${application?.get("mobNo").toString()}"
             txtRoom.text="Room No. :- ${application?.get("roomNo").toString()}"
             txtHostel.text="Hostel :- ${application?.get("hostel").toString()}"
-            txtDays.text="Total Number of Days :- ${application?.get("TotalNumberOfDays").toString()}"
+            txtDays.text="Total Number of Days :- ${application?.get("totalNumberOfDays").toString()}"
             txtDeparture.text= "Departure Date :- ${ application?.get("dateOfDeparture").toString() }"
             txtArrival.text= "Arrival Date :-  ${ application?.get("dateOfArrival").toString() }"
-            txtRegno.text="Reg. No. :- ${application?.get(" regNo ").toString()}"
-            txtStudentName.text="Student Name :- ${application?.get(" studentName ").toString()}"
+            txtRegno.text="Reg. No. :- ${application?.get("regNo").toString()}"
+            txtStudentName.text="Student Name :- ${application?.get("studentName").toString()}"
 
             val approvedByHostel : Boolean = application?.get("approvedByHostel") as Boolean
             val approvedByGuestHouse: Boolean = application?.get("approvedByGuestHouse") as Boolean

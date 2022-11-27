@@ -119,7 +119,7 @@ class ActiveApplicationsList : Fragment() {
             if(role=="0"){
                 break
             }
-            if(hostel != this.hostel){
+            if(role != "2" && hostel != this.hostel){
                 continue
             }
             else{

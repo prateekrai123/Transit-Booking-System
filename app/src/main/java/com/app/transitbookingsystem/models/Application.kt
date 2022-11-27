@@ -7,7 +7,7 @@ data class Application(
     val purpose: String?,
     val dateOfArrival: String?,
     val dateOfDeparture: String?,
-    val TotalNumberOfDays: String?,
+    val totalNumberOfDays: String?,
     val studentName: String?,
     val regNo: String?,
     val hostel: String?,
