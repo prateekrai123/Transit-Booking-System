@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -48,7 +49,6 @@ class ApplyFragment : Fragment() {
         arguments?.let {
 
         }
-
     }
 
     override fun onCreateView(
@@ -91,11 +91,12 @@ class ApplyFragment : Fragment() {
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
+                hostel = arr[0]
             }
         }
 
         applyBtn.setOnClickListener {
+            applyBtn.isActivated = false
             if(
                 etVisName.text.toString().trim() == "" ||
                         etAdd.text.toString().trim() == "" ||
@@ -111,6 +112,7 @@ class ApplyFragment : Fragment() {
             ){
 
                 Toast.makeText(context, "All fields should be completely filled", Toast.LENGTH_LONG).show()
+                applyBtn.isActivated = true
             }
             else{
                 try {
@@ -138,12 +140,17 @@ class ApplyFragment : Fragment() {
                     )
                     database.child("applications").child(id).setValue(application).addOnSuccessListener {
                         Toast.makeText(context, "Applied", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_applyFragment_to_mainFragment)
                     }.addOnFailureListener{
                         it.printStackTrace()
+                        Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                        applyBtn.isActivated = true
                     }
                 }
                 catch (e: Exception){
                     e.printStackTrace()
+                    Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                    applyBtn.isActivated = true
                 }
             }
             Toast.makeText(context, "Work in progress", Toast.LENGTH_LONG).show()

@@ -9,7 +9,11 @@
         android:id="@+id/applyFragment"
         android:name="com.app.transitbookingsystem.fragments.ApplyFragment"
         android:label="fragment_apply"
-        tools:layout="@layout/fragment_apply" />
+        tools:layout="@layout/fragment_apply" >
+        <action
+            android:id="@+id/action_applyFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/viewSingleApplication"
         android:name="com.app.transitbookingsystem.fragments.ViewSingleApplication"

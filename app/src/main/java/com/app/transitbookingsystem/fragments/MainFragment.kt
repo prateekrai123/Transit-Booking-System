@@ -20,6 +20,7 @@ import com.app.transitbookingsystem.models.Application
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -31,7 +32,7 @@ import com.sliet.transitbookingsystem.R
 
 class MainFragment : Fragment() {
 
-    lateinit var newApplicationBtn: Button
+    lateinit var newApplicationBtn: MaterialCardView
     lateinit var recyclerView: RecyclerView
     lateinit var btnLogOut: Button
     private lateinit var database: DatabaseReference

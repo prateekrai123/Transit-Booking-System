@@ -11,7 +11,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.app.transitbookingsystem.activities.LoginActivity
+import com.app.transitbookingsystem.adapters.AdminAdapter
+import com.app.transitbookingsystem.models.Application
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -20,33 +24,24 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sliet.transitbookingsystem.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ActiveApplicationsList.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ActiveApplicationsList : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var id: Int? = null
 
     lateinit var btnLogOut: Button
     private lateinit var database: DatabaseReference
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    lateinit var recyclerView : RecyclerView
 
     lateinit var sp: SharedPreferences
-    private  val sharedFileName = "users"
+    private val sharedFileName = "users"
+    private var hostel: String? = null
+    private var role: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            id = it.getString("id")?.toInt()
         }
     }
 
@@ -58,10 +53,30 @@ class ActiveApplicationsList : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_active_applications_list, container, false)
 
         btnLogOut = view.findViewById(R.id.btnLogOut)
+        recyclerView = view.findViewById(R.id.recyclerView)
 
         database = Firebase.database.reference
 
+        var applications: HashMap<String, HashMap<String, String>>? = null
+
         sp = activity?.getSharedPreferences(sharedFileName, Context.MODE_PRIVATE)!!
+
+        hostel = sp.getString("hostel", "hostel")
+        role = sp.getString("role", "1")
+
+        database.child("applications").get().addOnSuccessListener {
+            if(it.value == null){
+                Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                return@addOnSuccessListener
+            }
+            applications = it.value as HashMap<String, HashMap<String, String>>?
+            val applicationList = applicationList(applications)
+            recyclerView.adapter = AdminAdapter(applicationList!!, requireContext())
+            recyclerView.layoutManager = LinearLayoutManager(context)
+        }.addOnFailureListener {
+            it.printStackTrace()
+            Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+        }
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.client_id))
@@ -83,23 +98,50 @@ class ActiveApplicationsList : Fragment() {
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ActiveApplicationsList.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ActiveApplicationsList().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun applicationList(applications: HashMap<String, HashMap<String, String>>?): List<Application>? {
+        val applicationsList = arrayListOf<Application>()
+        val item = applications?.keys
+        for(i in item!!){
+            val temp: java.util.HashMap<String, String>? = applications[i]
+            val hostel = temp?.get("hostel")
+            val approvedByHostel: Boolean = temp?.get("approvedByHostel") as Boolean
+            if(role == "2"){
+                if(!approvedByHostel){
+                    continue
                 }
             }
+            if(role=="1"){
+                if(approvedByHostel){
+                    continue
+                }
+            }
+            if(role=="0"){
+                break
+            }
+            if(hostel != this.hostel){
+                continue
+            }
+            else{
+                val singleItem = Application(
+                    temp?.get("id").toString(),
+                    temp?.get("email").toString(),
+                    temp?.get("visitorName").toString(),
+                    temp?.get("purpose").toString(),
+                    temp?.get("dateOfArrival").toString(),
+                    temp?.get("dateOfDeparture").toString(),
+                    temp?.get("TotalNumberOfDays").toString(),
+                    temp?.get("studentName").toString(),
+                    temp?.get("regNo").toString(),
+                    temp?.get("hostel").toString(),
+                    temp?.get("roomNo").toString(),
+                    temp?.get("mobNo").toString(),
+                    temp?.get("paymentMode").toString(),
+                    temp?.get("approvedByHostel") as Boolean,
+                    temp?.get("approvedByGuestHouse") as Boolean,
+                )
+                applicationsList.add(singleItem)
+            }
+        }
+        return applicationsList
     }
 }
