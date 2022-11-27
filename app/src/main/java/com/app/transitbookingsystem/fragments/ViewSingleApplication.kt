@@ -1,31 +1,22 @@
 package com.app.transitbookingsystem.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.card.MaterialCardView
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.sliet.transitbookingsystem.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ViewSingleApplication.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ViewSingleApplication : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
     lateinit var txtStudentName:TextView
     lateinit var txtDays:TextView
     lateinit var txtArrival:TextView
@@ -34,12 +25,14 @@ class ViewSingleApplication : Fragment() {
     lateinit var txtRoom:TextView
     lateinit var txtMobile:TextView
     lateinit var txtRegno:TextView
+    lateinit var approvedByHostelView: MaterialCardView
+    lateinit var approvedByGuestHouseView: MaterialCardView
+    lateinit var btnDelete: Button
     lateinit var database : DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -53,9 +46,6 @@ class ViewSingleApplication : Fragment() {
 
         database = Firebase.database.reference
 
-        val id = activity?.intent?.getStringExtra("id")!!
-        val application = database.child("application").child(id) as HashMap<String, HashMap<String, String>>
-
         txtStudentName = view.findViewById(R.id.etStudentName)
         txtDays = view.findViewById(R.id.etDays)
         txtArrival=view.findViewById(R.id.etArrival)
@@ -65,36 +55,60 @@ class ViewSingleApplication : Fragment() {
         txtMobile=view.findViewById(R.id.etMobile)
         txtRegno=view.findViewById(R.id.etStudentReg)
 
+        btnDelete = view.findViewById(R.id.btnDelete)
 
-        txtMobile.text=application["mobNo"].toString()
-        txtRoom.text=application["roomNo"].toString()
-        txtHostel.text=application["hostel"].toString()
-        txtDays.text=application["TotalNumberOfDays"].toString()
-        txtDeparture.text=application["dateOfDeparture"].toString()
-        txtArrival.text=application["dateOfArrival"].toString()
-        txtRegno.text=application["regNo"].toString()
-        txtStudentName.text=application["studentName"].toString()
+        val id = activity?.intent?.getStringExtra("id")!!
+        var application : HashMap<String, HashMap<String, String>>? = null
+        database.child("application").child(id).get().addOnSuccessListener {
+            application = it.value as HashMap<String, HashMap<String, String>>?
+            approvedByHostelView = view.findViewById(R.id.card_view)
+            approvedByGuestHouseView = view.findViewById(R.id.card2_view)
+
+            txtMobile.text=application?.get("mobNo").toString()
+            txtRoom.text=application?.get("roomNo").toString()
+            txtHostel.text=application?.get("hostel").toString()
+            txtDays.text=application?.get("TotalNumberOfDays").toString()
+            txtDeparture.text=application?.get("dateOfDeparture").toString()
+            txtArrival.text=application?.get("dateOfArrival").toString()
+            txtRegno.text=application?.get("regNo").toString()
+            txtStudentName.text=application?.get("studentName").toString()
+
+            val approvedByHostel : Boolean = application?.get("approvedByHostel").toString().toBoolean()
+            val approvedByGuestHouse: Boolean = application?.get("approvedByGuestHouse").toString().toBoolean()
+            val green = Color.GREEN
+            val red = Color.RED
+
+            if(approvedByGuestHouse){
+                approvedByGuestHouseView.setBackgroundColor(green)
+            }
+            else{
+                approvedByGuestHouseView.setBackgroundColor(red)
+            }
+
+            if(approvedByHostel){
+                approvedByHostelView.setBackgroundColor(green)
+            }
+            else{
+                approvedByHostelView.setBackgroundColor(red)
+            }
+        }.addOnFailureListener {
+            it.printStackTrace()
+            Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+        }
+
+        btnDelete.setOnClickListener {
+            btnDelete.isActivated = false
+            database.child("applications").child(id).setValue(null).addOnSuccessListener {
+                Toast.makeText(context, "Successfully deleted", Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_viewSingleApplication_to_mainFragment)
+            }.addOnFailureListener {
+                it.printStackTrace()
+                Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                btnDelete.isActivated = true
+            }
+
+        }
 
         return view
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ViewSingleApplication.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ViewSingleApplication().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

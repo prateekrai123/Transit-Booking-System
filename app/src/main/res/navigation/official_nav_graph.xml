@@ -18,5 +18,9 @@
         android:id="@+id/confirmSingleApplication"
         android:name="com.app.transitbookingsystem.fragments.ConfirmSingleApplication"
         android:label="fragment_confirm_single_application"
-        tools:layout="@layout/fragment_confirm_single_application" />
+        tools:layout="@layout/fragment_confirm_single_application" >
+        <action
+            android:id="@+id/action_confirmSingleApplication_to_activeApplicationsList"
+            app:destination="@id/activeApplicationsList" />
+    </fragment>
 </navigation>

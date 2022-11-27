@@ -1,11 +1,16 @@
 package com.app.transitbookingsystem.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
@@ -13,20 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.sliet.transitbookingsystem.R
 import java.sql.DatabaseMetaData
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ConfirmSingleApplication.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ConfirmSingleApplication : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     lateinit var StudName1: TextView
     lateinit var txtStudRegNo1: TextView
@@ -42,11 +34,18 @@ class ConfirmSingleApplication : Fragment() {
     lateinit var PaymentOption1: TextView
     lateinit var database : DatabaseReference
 
+    lateinit var btnAccept: Button
+    lateinit var btnReject: Button
+    private var role: String? = null
+    private  val sharedFileName = "users"
+    lateinit var sp: SharedPreferences
+
+    private var id: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            id = it.getString("id")
         }
     }
 
@@ -54,14 +53,15 @@ class ConfirmSingleApplication : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_confirm_single_application, container, false)
 
+        sp = context?.getSharedPreferences(sharedFileName, AppCompatActivity.MODE_PRIVATE)!!
+
+        role = sp.getString("role", "0")
 
         database = Firebase.database.reference
-
         val id = activity?.intent?.getStringExtra("id")!!
-        val application = database.child("application").child(id) as HashMap<String, HashMap<String, String>>
+        var application :HashMap<String, HashMap<String, String>>? = null
 
         PaymentOption1= view.findViewById(R.id.etPaymentOption1)
         MobNo1= view.findViewById(R.id.etMobNo1)
@@ -74,39 +74,85 @@ class ConfirmSingleApplication : Fragment() {
         VisName1= view.findViewById(R.id.etVisName1)
         StudName1= view.findViewById(R.id.etStudName1)
         txtStudRegNo1=view.findViewById(R.id.StudRegNo1)
+        btnReject=view.findViewById(R.id.btnReject)
+        btnAccept=view.findViewById(R.id.btnAccept)
 
-        PaymentOption1.text= application?.get("paymentMode").toString()
-        MobNo1.text=application["mobNo"].toString()
-        RoomNo1.text=application["roomNo"].toString()
-        Hostel1.text=application["hostel"].toString()
-        TotalDays1.text=application["TotalNumberOfDays"].toString()
-        DateofDeparture1.text=application["dateOfDeparture"].toString()
-        DateOfArrival1.text=application["dateOfArrival"].toString()
-        Purpose1.text=application["purpose"].toString()
-        VisName1.text=application["visitorName"].toString()
-        txtStudRegNo1.text=application["regNo"].toString()
-        StudName1.text=application["studentName"].toString()
+        database.child("applications").child(id).get().addOnSuccessListener {
+            if(it.value == null){
+                Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                return@addOnSuccessListener
+            }
+            application = it.value as HashMap<String, HashMap<String, String>>?
+            PaymentOption1.text= application?.get("paymentMode").toString()
+            MobNo1.text=application?.get("mobNo").toString()
+            RoomNo1.text=application?.get("roomNo").toString()
+            Hostel1.text=application?.get("hostel").toString()
+            TotalDays1.text=application?.get("TotalNumberOfDays").toString()
+            DateofDeparture1.text=application?.get("dateOfDeparture").toString()
+            DateOfArrival1.text=application?.get("dateOfArrival").toString()
+            Purpose1.text=application?.get("purpose").toString()
+            VisName1.text=application?.get("visitorName").toString()
+            txtStudRegNo1.text=application?.get("regNo").toString()
+            StudName1.text=application?.get("studentName").toString()
+        }.addOnFailureListener {
+            it.printStackTrace()
+            Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+        }
+
+        btnAccept.setOnClickListener {
+            btnAccept.isActivated = false
+            if(role == "1"){
+                database.child("applications").child(id).child("approvedByHostel").setValue(true)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                        btnAccept.isActivated = true
+                    }
+            }
+            else if(role == "2"){
+                database.child("applications").child(id).child("approvedByGuestHouse").setValue(true)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                        btnAccept.isActivated = true
+                    }
+            }
+            else{
+                Toast.makeText(context, "You are not permitted for the action", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        btnReject.setOnClickListener {
+            btnAccept.isActivated = false
+            if(role == "1"){
+                database.child("applications").child(id).setValue(null)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                        btnAccept.isActivated = true
+                    }
+            }
+            else if(role == "2"){
+                database.child("applications").child(id).setValue(null)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Accepted", Toast.LENGTH_LONG).show()
+                        findNavController().navigate(R.id.action_confirmSingleApplication_to_activeApplicationsList)
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()
+                        btnAccept.isActivated = true
+                    }
+            }
+            else{
+                Toast.makeText(context, "You are not permitted for the action", Toast.LENGTH_LONG).show()
+            }
+        }
 
         return view;
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ConfirmSingleApplication.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ConfirmSingleApplication().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
