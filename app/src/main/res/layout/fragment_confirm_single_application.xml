@@ -28,6 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:hint="Name of Student" />
 
             <TextView
@@ -35,12 +37,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:hint="Reg. No." />
             <TextView
                 android:id="@+id/etVisName1"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:hint="Name of Visitor" />
 
             <TextView
@@ -48,6 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:hint="Address" />
 
             <TextView
@@ -55,6 +63,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:hint="Purpose" />
 
             <TextView
@@ -62,6 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:inputType="date"
                 android:hint="Date of Arrival" />
 
@@ -70,6 +82,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:inputType="date"
                 android:hint="Date of Departure" />
 
@@ -78,6 +92,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:inputType="number"
                 android:hint="Total Number of days" />
             <TextView
@@ -85,6 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:inputType="number"
                 android:hint="Hostel No." />
 
@@ -94,6 +112,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:inputType="number"
                 android:hint="Room No." />
 
@@ -102,6 +122,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:inputType="number"
                 android:hint="Mobile No." />
 
@@ -110,6 +132,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:inputType="number"
                 android:hint="Payment will be made by" />
 

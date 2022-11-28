@@ -102,6 +102,7 @@ class MainFragment : Fragment() {
                     temp.get("id").toString(),
                     temp.get("email").toString(),
                     temp.get("visitorName").toString(),
+                    temp.get("visAdd").toString(),
                     temp.get("purpose").toString(),
                     temp.get("dateOfArrival").toString(),
                     temp.get("dateOfDeparture").toString(),

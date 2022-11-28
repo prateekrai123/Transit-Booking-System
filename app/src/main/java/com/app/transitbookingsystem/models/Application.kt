@@ -4,6 +4,7 @@ data class Application(
     val id: String?,
     val email: String?,
     val visitorName: String?,
+    val visAdd: String?,
     val purpose: String?,
     val dateOfArrival: String?,
     val dateOfDeparture: String?,

@@ -29,6 +29,8 @@
             <TextView
                 android:id="@+id/etStudentName"
                 android:layout_width="match_parent"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:layout_height="40dp"
                 android:hint="Name of Student" />
 
@@ -37,6 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:hint="Reg No." />
 
             <TextView
@@ -44,6 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:hint="No. of Days" />
 
             <TextView
@@ -52,7 +58,8 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:hint="Date of Arrival"
-                android:inputType="date" />
+                android:textColor="#000"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/etDeparture"
@@ -60,31 +67,35 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:hint="Date of Departure"
-                android:inputType="date" />
+                android:textColor="#000"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/etHostel"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:textColor="#000"
+                android:textSize="15sp"
                 android:layout_marginTop="10dp"
-                android:hint="Hostel No."
-                android:inputType="number" />
+                android:hint="Hostel No."/>
 
             <TextView
                 android:id="@+id/etRoom"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:hint="Room No."
-                android:inputType="number" />
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:hint="Room No." />
 
             <TextView
                 android:id="@+id/etMobile"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:hint="Mobile No."
-                android:inputType="number" />
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:hint="Mobile No." />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_view"
@@ -94,17 +105,17 @@
                 android:layout_marginLeft="190dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="190dp"
-                card_view:cardBackgroundColor="#97a5f7"
-                card_view:cardCornerRadius="7dp"
+                card_view:cardBackgroundColor="#f00"
+                card_view:cardCornerRadius="20dp"
                 card_view:cardElevation="16dp">
 
                 <TextView
                     android:id="@+id/txtHostelVerified"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="match_parent"
                     android:layout_margin="20dp"
                     android:layout_marginTop="4dp"
-                    android:text="Verified/Not Verified by Hostel"
+                    android:text="Hostel Verification Pending"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
@@ -120,18 +131,18 @@
                 android:layout_marginTop="29dp"
                 android:layout_marginRight="190dp"
                 android:layout_marginBottom="0dp"
-                card_view:cardBackgroundColor="#97a5f7"
-                card_view:cardCornerRadius="7dp"
+                card_view:cardBackgroundColor="#f00"
+                card_view:cardCornerRadius="20dp"
                 card_view:cardElevation="16dp">
 
                 <TextView
                     android:id="@+id/txtGuestHouseVerified"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_width="283dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    android:text="Verified/Not Verified by Guest House"
+                    android:text="Transit verification pending"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="20sp" />

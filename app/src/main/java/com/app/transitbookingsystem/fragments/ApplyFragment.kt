@@ -125,6 +125,7 @@ class ApplyFragment : Fragment() {
                         id,
                         email.toString().trim(),
                         etVisName.text.toString().trim(),
+                        etAdd.text.toString().trim(),
                         etPurpose.text.toString().trim(),
                         etDateOfArr.text.toString().trim(),
                         etDateOfDep.text.toString().trim(),

@@ -65,6 +65,7 @@ class ConfirmSingleApplication : Fragment() {
 
         PaymentOption1= view.findViewById(R.id.etPaymentOption1)
         MobNo1= view.findViewById(R.id.etMobNo1)
+        VisAdd1 = view.findViewById(R.id.etVisAdd1)
         RoomNo1= view.findViewById(R.id.etRoomNo1)
         Hostel1= view.findViewById(R.id.etHostel1)
         TotalDays1= view.findViewById(R.id.etTotalDays1)
@@ -83,17 +84,18 @@ class ConfirmSingleApplication : Fragment() {
                 return@addOnSuccessListener
             }
             application = it.value as HashMap<String, Any>?
-            PaymentOption1.text= application?.get("paymentMode").toString()
-            MobNo1.text=application?.get("mobNo").toString()
-            RoomNo1.text=application?.get("roomNo").toString()
-            Hostel1.text=application?.get("hostel").toString()
-            TotalDays1.text=application?.get("TotalNumberOfDays").toString()
-            DateofDeparture1.text=application?.get("dateOfDeparture").toString()
-            DateOfArrival1.text=application?.get("dateOfArrival").toString()
-            Purpose1.text=application?.get("purpose").toString()
-            VisName1.text=application?.get("visitorName").toString()
-            txtStudRegNo1.text=application?.get("regNo").toString()
-            StudName1.text=application?.get("studentName").toString()
+            PaymentOption1.text= "Payment option :- ${application?.get("paymentMode").toString()}"
+            VisAdd1.text="Visitor's Address :- ${application?.get("visAdd").toString()}"
+            MobNo1.text="Mobile Number :- ${application?.get("mobNo").toString()}"
+            RoomNo1.text="Room No. :- ${application?.get("roomNo").toString()}"
+            Hostel1.text="Hostel :- ${application?.get("hostel").toString()}"
+            TotalDays1.text="Total Number of days :- ${application?.get("totalNumberOfDays").toString()}"
+            DateofDeparture1.text="Date of Departure :- ${application?.get("dateOfDeparture").toString()}"
+            DateOfArrival1.text="Date of Arrival :- ${application?.get("dateOfArrival").toString()}"
+            Purpose1.text="Purpose :- ${application?.get("purpose").toString()}"
+            VisName1.text="Visitor's Name :- ${application?.get("visitorName").toString()}"
+            txtStudRegNo1.text="Reg. No. :-  ${application?.get("regNo").toString()}"
+            StudName1.text="Student's Name :- ${application?.get("studentName").toString()}"
         }.addOnFailureListener {
             it.printStackTrace()
             Toast.makeText(context, "Some error occurred", Toast.LENGTH_LONG).show()

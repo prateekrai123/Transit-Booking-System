@@ -89,12 +89,12 @@ class ViewSingleApplication : Fragment() {
 
             if(approvedByGuestHouse){
                 approvedByGuestHouseView.setBackgroundColor(green)
-                txtGuestHouseVerified.text = "Verified by guest house"
+                txtGuestHouseVerified.text = "Verified by transit"
 
             }
             else{
                 approvedByGuestHouseView.setBackgroundColor(red)
-                txtHostelVerified.text = "Guest house verification pending"
+                txtHostelVerified.text = "Transit verification pending"
             }
 
             if(approvedByHostel){

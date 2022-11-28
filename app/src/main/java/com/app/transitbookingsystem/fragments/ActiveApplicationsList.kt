@@ -106,8 +106,14 @@ class ActiveApplicationsList : Fragment() {
             val temp: java.util.HashMap<String, Any>? = applications[i]
             val hostel = temp?.get("hostel")
             val approvedByHostel: Boolean = temp?.get("approvedByHostel") as Boolean
+            val approvedByTransit: Boolean = temp?.get("approvedByGuestHouse") as Boolean
             if(role == "2"){
                 if(!approvedByHostel){
+                    continue
+                }
+            }
+            if(role == "2"){
+                if(approvedByTransit){
                     continue
                 }
             }
@@ -127,6 +133,7 @@ class ActiveApplicationsList : Fragment() {
                     temp?.get("id").toString(),
                     temp?.get("email").toString(),
                     temp?.get("visitorName").toString(),
+                    temp.get("visAdd").toString(),
                     temp?.get("purpose").toString(),
                     temp?.get("dateOfArrival").toString(),
                     temp?.get("dateOfDeparture").toString(),
